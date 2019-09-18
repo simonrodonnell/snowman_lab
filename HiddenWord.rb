@@ -1,11 +1,12 @@
 class HiddenWord
 
-  attr_reader(:word, :display)
+  attr_reader(:word, :display, :correct_guess)
 
   def initialize(input_word)
     @word = input_word
     @word_array = @word.split("")
     @display = @word.gsub /#{@word_array}/, "*"
+    @correct_guess = false
     # length = @word_array.length()
     # while length > 0
     #   @display.push("*")
@@ -28,8 +29,14 @@ class HiddenWord
   def change_display(letter)
     if guess(letter)
       @word_array.delete(letter)
-      @display = @word.gsub /#{@word_array}/, "*"
-      return @display
+      if @word_array.empty? != true
+        @display = @word.gsub /#{@word_array}/, "*"
+        return @display
+      else
+        @display = @word
+        @correct_guess = true
+        return @display
+      end
     end
     return @display
   end

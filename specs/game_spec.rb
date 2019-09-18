@@ -8,6 +8,7 @@ class TestGame < Minitest::Test
 
   def setup
     @hidden_word = HiddenWord.new("pineapple")
+    @hidden_word2 = HiddenWord.new("cat")
     @player1 = Player.new("Tim")
     @game = Game.new()
   end
@@ -24,6 +25,31 @@ class TestGame < Minitest::Test
   def test_remove_life_if_incorrect()
     @game.remove_life_if_incorrect("q", @player1, @hidden_word)
     assert_equal(5, @player1.lives)
+  end
+
+  def test_game_lost()
+    @game.remove_life_if_incorrect("q", @player1, @hidden_word)
+    @game.remove_life_if_incorrect("q", @player1, @hidden_word)
+    @game.remove_life_if_incorrect("q", @player1, @hidden_word)
+    @game.remove_life_if_incorrect("q", @player1, @hidden_word)
+    @game.remove_life_if_incorrect("q", @player1, @hidden_word)
+    @game.remove_life_if_incorrect("q", @player1, @hidden_word)
+    assert_equal("Game over.", @game.game_lost(@player1))
+  end
+
+  def test_send_guess_to_hidden_word()
+    @game.send_guess_to_hidden_word("c", @hidden_word2)
+    assert_equal("c**", @hidden_word2.change_display("c"))
+  end
+
+
+  def test_game_won
+    @game.send_guess_to_hidden_word("c", @hidden_word2)
+    @game.send_guess_to_hidden_word("a", @hidden_word2)
+    @game.send_guess_to_hidden_word("t", @hidden_word2)
+
+    # assert_equal("cat", @hidden_word2.display)
+    assert_equal("Well done! You guessed correctly", @game.game_won(@hidden_word2))
   end
 
 end
