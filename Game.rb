@@ -38,6 +38,7 @@ class Game
       player.remove_player_life()
       game_lost(player)
     end
+    return hidden_word.display()
   end
 
 end
