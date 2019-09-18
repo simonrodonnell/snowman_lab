@@ -47,7 +47,6 @@ class TestGame < Minitest::Test
     @game.send_guess_to_hidden_word("c", @hidden_word2)
     @game.send_guess_to_hidden_word("a", @hidden_word2)
     @game.send_guess_to_hidden_word("t", @hidden_word2)
-
     # assert_equal("cat", @hidden_word2.display)
     assert_equal("Well done! You guessed correctly", @game.game_won(@hidden_word2))
   end
@@ -61,6 +60,23 @@ class TestGame < Minitest::Test
   def test_player_guesses_letter__incorrect()
     @game.player_guess_letter("z", @hidden_word2, @player1)
     assert_equal(5, @player1.lives)
+  end
+
+  def test_player_guesses_letter__incorrect_6_times_game_lost()
+    @game.player_guess_letter("z", @hidden_word2, @player1)
+    @game.player_guess_letter("z", @hidden_word2, @player1)
+    @game.player_guess_letter("z", @hidden_word2, @player1)
+    @game.player_guess_letter("z", @hidden_word2, @player1)
+    @game.player_guess_letter("z", @hidden_word2, @player1)
+    result = @game.player_guess_letter("z", @hidden_word2, @player1)
+    assert_equal("Game over.", result)
+  end
+
+  def test_player_guesses_letter__correct_letters_game_won()
+    @game.player_guess_letter("c", @hidden_word2, @player1)
+    @game.player_guess_letter("a", @hidden_word2, @player1)
+    result = @game.player_guess_letter("t", @hidden_word2, @player1)
+    assert_equal("Well done! You guessed correctly", result)
   end
 
 end

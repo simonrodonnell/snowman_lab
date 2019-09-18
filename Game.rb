@@ -33,8 +33,10 @@ class Game
     add_player_guess_to_array(letter)
     if hidden_word.guess(letter) == true
       hidden_word.change_display(letter)
+      game_won(hidden_word)
     else
       player.remove_player_life()
+      game_lost(player)
     end
   end
 
