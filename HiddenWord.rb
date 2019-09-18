@@ -16,4 +16,8 @@ class HiddenWord
     end
   end
 
+  def guess(letter)
+    return @word.include?(letter)
+  end
+
 end

@@ -18,4 +18,12 @@ class TestHiddenWord < Minitest::Test
   end
 
 
+  def test_guess__is_correct()
+    assert_equal(true, @hidden_word.guess("p"))
+  end
+
+  def test_guess__is_false()
+    assert_equal(false, @hidden_word.guess("z"))
+  end
+
 end
