@@ -29,4 +29,13 @@ class Game
     return "Well done! You guessed correctly" if hidden_word.correct_guess
   end
 
+  def player_guess_letter(letter, hidden_word, player)
+    add_player_guess_to_array(letter)
+    if hidden_word.guess(letter) == true
+      hidden_word.change_display(letter)
+    else
+      player.remove_player_life()
+    end
+  end
+
 end

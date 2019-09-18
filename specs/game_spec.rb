@@ -52,4 +52,15 @@ class TestGame < Minitest::Test
     assert_equal("Well done! You guessed correctly", @game.game_won(@hidden_word2))
   end
 
+  def test_player_guesses_letter__correct()
+    @game.player_guess_letter("c", @hidden_word2, @player1)
+    assert_equal("c**", @hidden_word2.display())
+    assert_equal(["c"], @game.guessed_letters())
+  end
+
+  def test_player_guesses_letter__incorrect()
+    @game.player_guess_letter("z", @hidden_word2, @player1)
+    assert_equal(5, @player1.lives)
+  end
+
 end
